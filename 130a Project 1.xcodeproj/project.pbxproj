@@ -6,10 +6,25 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXFileReference section */
+		7D818DF020226257003E28F0 /* BST.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BST.cpp; sourceTree = "<group>"; };
+		7D818DF120226257003E28F0 /* BST.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BST.hpp; sourceTree = "<group>"; };
+		7D818DF22022627D003E28F0 /* HashTable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HashTable.cpp; sourceTree = "<group>"; };
+		7D818DF32022627D003E28F0 /* HashTable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HashTable.hpp; sourceTree = "<group>"; };
+		7D818DF420226432003E28F0 /* Node.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Node.cpp; sourceTree = "<group>"; };
+		7D818DF520226432003E28F0 /* Node.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Node.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
 /* Begin PBXGroup section */
 		7D818DE92022622C003E28F0 = {
 			isa = PBXGroup;
 			children = (
+				7D818DF020226257003E28F0 /* BST.cpp */,
+				7D818DF120226257003E28F0 /* BST.hpp */,
+				7D818DF22022627D003E28F0 /* HashTable.cpp */,
+				7D818DF32022627D003E28F0 /* HashTable.hpp */,
+				7D818DF420226432003E28F0 /* Node.cpp */,
+				7D818DF520226432003E28F0 /* Node.hpp */,
 			);
 			sourceTree = "<group>";
 		};
