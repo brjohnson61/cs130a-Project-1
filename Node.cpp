@@ -93,7 +93,8 @@ void Node::setLeft(const Node &left){
 }
 
 //Delete right pointer and all of its right pointers
-bool deleteRight(void){
+//Returns true if deletion ocurs, and false if it doesn't
+bool Node::deleteRight(void){
     if(this.right != null){
         (*(this.right)).deleteRight();
         delete this;
@@ -105,7 +106,8 @@ bool deleteRight(void){
 }
 
 //Delete left pointer and all of its left pointers
-bool deleteLeft(void){
+//Returns true if deletion ocurs, and false if it doesn't
+bool Node::deleteLeft(void){
     if(this.left != null){
         (*(this.left)).deleteLeft();
         delete this;
@@ -116,4 +118,22 @@ bool deleteLeft(void){
     }
 }
 
+//Checks to see if right pointer is null
+bool Node::rightIsNull(){
+    if(this.right == NULL){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 
+//Checks to see if left pointer is null
+bool Node::leftIsNull(){
+    if(this.left == NULL){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
