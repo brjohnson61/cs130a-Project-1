@@ -18,11 +18,17 @@ using namespace std;
 
 
 class Node {
-    
+
+private:
+    string word;
+    int count;
+    Node *right;
+    Node *left;
+
 public:
     Node();
-    Node(string word);
-    Node(string word, int count);
+    Node(const string word);
+    Node(const string word, const int count);
     ~Node();
     
     string getWord(void);
@@ -33,8 +39,8 @@ public:
     void setCount(int count);
     void incrementCount(void);
     void decrementCount(void);
-    
-private:
-    string word;
-    int count;
+    void setRight(const Node &right);
+    void setLeft(const Node &left);
+    bool deleteRight(void);
+    bool deleteLeft(void);
 };
