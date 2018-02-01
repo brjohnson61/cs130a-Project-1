@@ -8,22 +8,58 @@
 
 #include "Node.hpp"
 #include <string>
+#include <iostream>
 
 using namespace std;
 
-class Node {
+Node::Node(){
+    word = "";
+    count = 0;
+}
+
+Node::Node(string word){
+    this->word = word;
+    count = 1;
+}
+
+Node::Node(string word, int count){
+    this->word = word;
+    this->count = count;
+}
+
+Node::~Node(){
     
-public:
-    Node();
-    Node(int count);
-    Node(String word);
-    Node(String word, int count)
-    String getWord(void);
-    int getCount(void);
-    int getWordLength(void);
-    String printNode(void);
-    
-private:
-    String word;
-    int count
-};
+}
+
+string Node::getWord(){
+    return this->word;
+}
+
+int Node::getCount(){
+    return this->count;
+}
+
+int Node::getWordLength(){
+    return this->word.length;
+}
+
+string Node::printNode(){
+    cout << "Word: " << this->word << " Count: " << to_string(this->count) << endl;
+}
+
+void Node::setWord(string word){
+    this->word = word;
+}
+
+void Node::setCount(int count){
+    this->count = count;
+}
+
+
+void Node::incrementCount(){
+    this->count++;
+}
+
+void Node::decrementCount(){
+    this->count--;
+}
