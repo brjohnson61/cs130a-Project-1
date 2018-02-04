@@ -58,7 +58,7 @@ int Node::getWordLength(){
 }
 
 //Prints the word-count pair of a node
-string Node::printNode(){
+void Node::printNode(){
     cout << "Word: " << this->word << " Count: " << this->count << endl;
 }
 
@@ -90,6 +90,16 @@ void Node::setRight(Node* right){
 //Sets the left node
 void Node::setLeft(Node* left){
     this->left = left;
+}
+
+//Returns the right private member pointer
+Node* Node::getRight(){
+    return this->right;
+}
+
+//Returns the left private member pointer
+Node* Node::getLeft(){
+    return this->left;
 }
 
 //Delete right pointer and all of its right pointers

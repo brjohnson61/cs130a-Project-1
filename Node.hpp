@@ -34,13 +34,15 @@ public:
     string getWord(void);
     int getCount(void);
     int getWordLength(void);
-    string printNode(void);
+    void printNode(void);
     void setWord(string word);
     void setCount(int count);
     void incrementCount(void);
     void decrementCount(void);
     void setRight(Node* right);
     void setLeft(Node* left);
+    Node* getRight(void);
+    Node* getLeft(void);
     bool deleteRight(void);
     bool deleteLeft(void);
     bool rightIsNull(void);
