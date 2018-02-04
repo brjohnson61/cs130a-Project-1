@@ -39,8 +39,10 @@ public:
     void setCount(int count);
     void incrementCount(void);
     void decrementCount(void);
-    void setRight(const Node &right);
-    void setLeft(const Node &left);
+    void setRight(Node* right);
+    void setLeft(Node* left);
     bool deleteRight(void);
     bool deleteLeft(void);
+    bool rightIsNull(void);
+    bool leftIsNull(void);
 };
