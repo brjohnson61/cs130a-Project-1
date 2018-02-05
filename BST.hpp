@@ -29,6 +29,8 @@ public:
     BST(Node* otherRoot);
 
     Node* getRoot();
+    BST* getRightTree();
+    BST* getLeftTree();
     // int getHeight();
     // int getSize();
     
