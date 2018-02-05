@@ -20,13 +20,18 @@ using namespace std;
 
 class BST{
     Node* root;
-    int height;
-    int size;
+    // int height;
+    // int size;
 
 public:
-    BST(BST* other);
+    BST(BST* otherTree);
     BST();
-    BST(Node* root);
+    BST(Node* otherRoot);
+
+    Node* getRoot();
+    // int getHeight();
+    // int getSize();
+    
 
     bool search(string word);
     void insert(string word);

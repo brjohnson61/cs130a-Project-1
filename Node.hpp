@@ -29,6 +29,7 @@ public:
     Node();
     Node(const string word);
     Node(const string word, const int count);
+    Node(Node* other);
     ~Node();
     
     string getWord(void);

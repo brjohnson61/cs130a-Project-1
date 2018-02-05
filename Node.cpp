@@ -36,6 +36,13 @@ Node::Node(const string word, const int count){
     this->left = NULL;
 }
 
+Node::Node(Node* other){
+    this->word = other->getWord();
+    this->count = other->getCount();
+    this->right = NULL;
+    this->left = NULL;
+}
+
 //Destructor
 Node::~Node(){
     this->right = NULL;
