@@ -26,6 +26,8 @@ public:
     bool searchWord(string word);
     bool insertWord(string word);
     bool deleteWord(string word);
+    void sortWords(void);
+    void rangeSearch(string word1, string word2);
     
 
 

@@ -37,3 +37,11 @@ bool HashTable::deleteWord(string word){
 int HashTable::hashWord(string word){
     return 0;
 }
+
+void HashTable::sortWords(){
+    
+}
+
+void HashTable::rangeSearch(string word1, string word2){
+
+}
