@@ -1,2 +1,2 @@
-MainMake: Main.cpp Node.cpp
-	g++ -o MainMake Node.cpp Main.cpp
+MainMake: Main.cpp Node.cpp HashTable.cpp
+	g++ -o MainMake Node.cpp Main.cpp HashTable.cpp 
