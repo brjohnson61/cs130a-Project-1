@@ -10,10 +10,11 @@
 #define HashTable_hpp
 
 #include <stdio.h>
-#include "Node.hpp"
 #include <string>
+#include<stdio.h>
+#include"Node.hpp"
 
-#endif /* HashTable_hpp */
+
 
 
 using namespace std;
@@ -28,12 +29,14 @@ public:
     bool deleteWord(string word);
     void sortWords(void);
     void rangeSearch(string word1, string word2);
+    int hashWord(string word);
     
 
 
 private:
     int size;
     Node** hashArray;
-    int hashWord(string word);
+    
 
 };
+#endif /* HashTable_hpp */

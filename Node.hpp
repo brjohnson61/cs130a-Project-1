@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <string>
 
-#endif /* Node_hpp */
+
 
 using namespace std;
 
@@ -49,3 +49,4 @@ public:
     bool rightIsNull(void);
     bool leftIsNull(void);
 };
+#endif /* Node_hpp */
