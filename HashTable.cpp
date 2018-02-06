@@ -8,6 +8,8 @@
 
 #include "HashTable.hpp"
 #include <string>
+#include <math.h>
+#include <iostream>
 
 using namespace std;
 
@@ -34,8 +36,17 @@ bool HashTable::insertWord(string word){
 bool HashTable::deleteWord(string word){
     return false;
 }
+
 int HashTable::hashWord(string word){
-    return 0;
+    int stringLength = word.length(); 
+    int index;
+    unsigned int sum = 0;
+    for (int i = 0; i< stringLength; i++){
+        sum = sum + i*pow((int)word.charAt(i), i);
+        cout << sum << endl;
+    }
+    index = sum % (size);
+    return index;
 }
 
 void HashTable::sortWords(){
