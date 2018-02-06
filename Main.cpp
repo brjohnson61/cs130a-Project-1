@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include "Node.hpp"
+#include "HashTable.hpp"
 
 using namespace std;
 
@@ -36,6 +37,21 @@ int number = 10;
     (*temp2).printNode();
     cout << endl;
 
-//}
+
+    // Hash Table Testing
+    HashTable table1 = HashTable(100);
+    int letter = table1.hashWord("letter");
+    int increment = table1.hashWord("increment");
+    int character = table1.hashWord("character");
+    int fernando = table1.hashWord("fernando");
+    int Fernando = table1.hashWord("FerNando");
+
+    cout << "Letter: " << letter<< endl;
+    cout << "increment : " << increment<< endl;
+    cout << "fernando : " << fernando << endl;
+    cout << "Fernando : " << Fernando << endl;
+    // END Hash Table Testing
+
+
     return 0;
 }
