@@ -15,19 +15,23 @@
 using namespace std;
 
 BST::BST(BST* otherTree){
-    if(otherTree->getRoot() != NULL){
-        this->root = new Node(otherTree->getRoot());
-        if(this->getRoot()->rightIsNull()){
-            this->getRoot()->setRight(NULL);
+    BST(otherTree->getRoot());
+}
+
+BST::BST(Node* otherRoot){
+    if(otherRoot != NULL){
+        this->root = new Node(otherRoot);
+        if(otherRoot->rightIsNull()){
+            this->root->setRight(NULL);
         }
         else{
-            this->getRoot()->setRight(BST(otherTree->getRightTree()).getRoot())
+            this->root->setRight(BST(otherRoot->getRight()).getRoot());
         }
-        if(this->getRoot()->leftIsNull()){
-            this->getRoot()->setLeft(NULL);
+        if(otherRoot->leftIsNull()){
+        this->root->setLeft(NULL);
         }
         else{
-            this->getRoot()->setLeft(BST(otherTree->getLeftTree()).getRoot())
+            this->root->setLeft(BST(otherRoot->getLeft()).getRoot());
         }
     }
     else{
@@ -35,48 +39,43 @@ BST::BST(BST* otherTree){
     }
 }
 
-BST::BST(Node* otherRoot){
-    this->root = new Node(otherRoot);
-    if(otherRoot->rightIsNull()){
-        this->root->setRight(NULL);
+void BST::setRoot(Node* other){
+    this->root = other;
+}
+
+Node* BST::getRoot(){
+    return this->root;
+}
+
+bool searchNode(Node* root, string word){
+    if(root == NULL){
+        return false;
     }
     else{
-        this->root->setRight(BST(otherRoot->getRight()).getRoot());
-    }
-    if(otherRoot->leftIsNull()){
-        this->root->setLeft(NULL);
-    }
-    else{
-        this->root->setLeft(BST(otherRoot->getLeft()).getRoot());
+        if(root->getWord().compare(word) == 0){
+            return true;
+        }
+        else if(root->getWord().compare(word) < 0){
+            if(root->getRight()->rightIsNull()){
+                return false;
+            }
+            else{
+                return searchNode(root->getRight(), word);
+            }
+        }
+        else{
+            if(root->getLeft()->leftIsNull()){
+                return false;
+            }
+            else{
+                return searchNode(root->getLeft(), word);
+            }
+        }
     }
 }
 
 bool BST::search(string word){
-    if(this->getRoot() == NULL){
-        return false;
-    }
-    else{
-        if(this->getRoot()->getWord().compare(word) == 0){
-            return true;
-        }
-        else if(this->getRoot()->getWord().compare(word) < 0){
-            if(this->getRoot()->rightIsNull()){
-                return false;
-            }
-            else{
-                return this->getRightTree()->search(word);
-            }
-        }
-        else{
-            if(this->getRoot()->leftIsNull()){
-                return false;
-            }
-            else{
-                return this->getLeftTree()->search(word);
-            }
-        }
-    }
-
+    searchNode(this->getRoot(), word);
 }
 
 void BST::insert(string word){
@@ -84,13 +83,13 @@ void BST::insert(string word){
 }
 
 void BST::remove(string word){
-
+    
 }
 
 void BST::sort(){
 
 }
 
-void BST::rangedSearch(){
+void BST::rangeSearch(string startWord, string endWord){
 
 }
