@@ -22,8 +22,7 @@ class Node {
 private:
     string word;
     int count;
-    Node *right;
-    Node *left;
+  
 
 public:
     Node();
@@ -40,13 +39,6 @@ public:
     void setCount(int count);
     void incrementCount(void);
     void decrementCount(void);
-    void setRight(Node* right);
-    void setLeft(Node* left);
-    Node* getRight(void);
-    Node* getLeft(void);
-    bool deleteRight(void);
-    bool deleteLeft(void);
-    bool rightIsNull(void);
-    bool leftIsNull(void);
+    
 };
 #endif /* Node_hpp */

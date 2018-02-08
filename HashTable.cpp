@@ -40,19 +40,32 @@ bool HashTable::deleteWord(string word){
     return false;
 }
 
-int HashTable::hashWord(string word){
+int HashTable::hashWord1(string word){
     int stringLength = word.length(); 
     int index;
     unsigned int sum = 0;
     char wordArr[stringLength + 1];
     transform(word.begin(), word.end(), word.begin(), ::tolower);
-    cout << "Word: "<<  word<< endl;
     strcpy(wordArr, word.c_str());
     for (int i = 0; i< stringLength; i++){
         sum = sum + i*pow((int)(wordArr[i]), i);
         
     }
-    index = sum % (size);
+    index = sum % (size-1);
+    return index;
+}
+
+int HashTable::hashWord2(string word){
+    int stringLength = word.length(); 
+    int index;
+    unsigned int sum = 0;
+    char wordArr[stringLength + 1];
+    transform(word.begin(), word.end(), word.begin(), ::tolower);
+    strcpy(wordArr, word.c_str());
+    for (int i = 0; i< stringLength; i++){
+        sum = sum + (stringLength-1)*pow((int)(wordArr[i]), (stringLength-1)-i);
+    }
+    index = 1 + sum/size %(size-1);
     return index;
 }
 

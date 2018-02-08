@@ -40,16 +40,27 @@ int number = 10;
 
     // Hash Table Testing
     HashTable table1 = HashTable(100);
-    int letter = table1.hashWord("letter");
-    int increment = table1.hashWord("increment");
-    int character = table1.hashWord("character");
-    int fernando = table1.hashWord("fernando");
-    int Fernando = table1.hashWord("FerNando");
+    int letter = table1.hashWord1("letter");
+    int increment = table1.hashWord1("increment");
+    int character = table1.hashWord1("character");
+    int fernando = table1.hashWord1("fernando");
+    int Fernando = table1.hashWord1("FerNando");
+
+    int letter1 = table1.hashWord2("letter");
+    int increment1 = table1.hashWord2("increment");
+    int character1 = table1.hashWord2("character");
+    int fernando1 = table1.hashWord2("fernando");
+    int Fernando1 = table1.hashWord2("FerNando");
 
     cout << "Letter: " << letter<< endl;
     cout << "increment : " << increment<< endl;
     cout << "fernando : " << fernando << endl;
     cout << "Fernando : " << Fernando << endl;
+
+    cout << "Letter1: " << letter1<< endl;
+    cout << "increment1 : " << increment1<< endl;
+    cout << "fernando1 : " << fernando1 << endl;
+    cout << "Fernando1 : " << Fernando1 << endl;
     // END Hash Table Testing
 
 

@@ -29,7 +29,8 @@ public:
     bool deleteWord(string word);
     void sortWords(void);
     void rangeSearch(string word1, string word2);
-    int hashWord(string word);
+    int hashWord1(string word);
+    int hashWord2(string word);
     
 
 
