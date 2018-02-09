@@ -20,14 +20,21 @@ using namespace std;
 
 class BST{
     Node* root;
-
+    BST* right;
+    BST* left;
 public:
     BST(BST* otherTree);
     BST();
     BST(Node* otherRoot);
 
     Node* getRoot();
-    void setRoot(Node* other);    
+    void setRoot(Node* other);
+    BST* getRight(void);
+    BST* getLeft(void);
+    void setRight(BST* other);
+    void setLeft(BST* other);
+    void setRight(Node* other);
+    void setLeft(Node* other);
 
     bool search(string word);
     void insert(string word);
