@@ -75,7 +75,7 @@ bool searchNode(Node* root, string word){
 }
 
 bool BST::search(string word){
-    searchNode(this->getRoot(), word);
+    return searchNode(this->getRoot(), word);
 }
 
 void BST::insert(string word){
