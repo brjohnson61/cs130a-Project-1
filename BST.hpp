@@ -41,7 +41,4 @@ public:
     void remove(string word);
     void sort(void);
     void rangeSearch(string startWord, string endWord);
-
-    
-    
 };
