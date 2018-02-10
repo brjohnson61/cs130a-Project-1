@@ -9,6 +9,8 @@
 #include "Node.hpp"
 #include <string>
 #include <iostream>
+#include <algorithm>
+
 
 using namespace std;
 
@@ -19,13 +21,15 @@ Node::Node(){
 }
 
 //String-only constructor
-Node::Node(const string word){
+Node::Node(string word){
+    
     this->word = word;
     count = 1;
 }
 
 //String and Count constructor
-Node::Node(const string word, const int count){
+Node::Node(string word,int count){
+    transform(word.begin(), word.end(), word.begin(), ::tolower);
     this->word = word;
     this->count = count;
 }

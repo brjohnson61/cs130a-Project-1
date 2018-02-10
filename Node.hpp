@@ -26,10 +26,9 @@ private:
 
 public:
     Node();
-    Node(const string word);
-    Node(const string word, const int count);
-    Node(Node* other);
-    ~Node();
+    Node( string word);
+    Node(string word, int count);
+    Node(Node* other); 
     
     string getWord(void);
     int getCount(void);

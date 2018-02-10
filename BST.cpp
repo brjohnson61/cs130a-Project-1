@@ -19,6 +19,7 @@ BST::BST(BST* otherTree){
 }
 
 BST::BST(Node* otherRoot){
+    /*
     if(otherRoot != NULL){
         this->root = new Node(otherRoot);
         if(otherRoot->rightIsNull()){
@@ -37,6 +38,7 @@ BST::BST(Node* otherRoot){
     else{
         this->root = NULL;
     }
+    */
 }
 
 void BST::setRoot(Node* other){
@@ -48,6 +50,7 @@ Node* BST::getRoot(){
 }
 
 bool searchNode(Node* root, string word){
+    /*
     if(root == NULL){
         return false;
     }
@@ -72,6 +75,8 @@ bool searchNode(Node* root, string word){
             }
         }
     }
+    */
+    return false;
 }
 
 bool BST::search(string word){

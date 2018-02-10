@@ -36,7 +36,11 @@ public:
 
 private:
     int size;
-    Node** hashArray;
+    Node *hashArray;
+    bool *countArray;
+    bool *emptyAt;
+    int count;
+    int largestSearchTraversal;
     
 
 };
