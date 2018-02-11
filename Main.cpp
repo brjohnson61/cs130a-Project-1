@@ -40,7 +40,7 @@ int number = 10;
 
 
     // Hash Table Testing
-    HashTable table1 = HashTable(100);
+    HashTable table1 = HashTable(70);
     
   
      
@@ -265,6 +265,13 @@ int number = 10;
     table1.insertWord("uggs") ;
     cout << endl ;
     cout << endl;
+
+    table1.searchWord("uggs");
+    cout << "\n\n";
+
+    table1.searchWord("happy");
+    cout << "\n\n";
+
     // END Hash Table Testing
     cout << endl << endl;
     cout << "Begin Final Turnin Select Menu" << endl;
