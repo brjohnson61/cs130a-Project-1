@@ -35,10 +35,12 @@ public:
     void setLeft(BST* other);
     void setRight(Node* other);
     void setLeft(Node* other);
+    BST* minimumRoot(void);
+    void printTree();
 
     bool search(string word);
     void insert(string word);
-    void remove(string word);
+    BST* remove(string word);
     void sort(void);
     void rangeSearch(string startWord, string endWord);
 };

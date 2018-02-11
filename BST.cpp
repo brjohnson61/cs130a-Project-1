@@ -86,6 +86,25 @@ void BST::setLeft(Node* other){
     this->left = new BST(other);
 }
 
+BST* BST::minimumRoot(){
+    if(this->getLeft() == NULL){
+        return this;
+    }
+    else{
+        return this->getLeft()->minimumRoot();
+    }
+}
+
+void BST::printTree(){
+    if(this->getLeft() != NULL){
+        this->getLeft()->printTree();
+    }
+    this->getRoot()->printNode();
+    if(this->getRight() != NULL){
+        this->getRight()->printTree();
+    }
+}
+
 bool BST::search(string word){
     //Checks to see if root is not null
     if(this->getRoot() == NULL){
@@ -146,7 +165,54 @@ void BST::insert(string word){
     }
 }
 
-void BST::remove(string word){
+BST* BST::remove(string word){
+    if(this->getRoot() == NULL){
+        return this;
+    }
+    
+    if(this->getRoot()->getWord() == word){
+        if(this->getRoot()->getCount() > 1){
+            this->getRoot()->decrementCount();
+            return this;
+        }
+        if(this->getRight()==NULL && this->getLeft()==NULL){
+                delete this->getRoot();
+                return NULL;
+        }
+        else if((this->getRight() == NULL) != (this->getLeft() == NULL)){
+            BST* temp;
+            if(this->getRight()==NULL){
+                temp = this->getLeft();
+                
+            }
+            else{
+                temp = this->getRight();
+            }
+            delete this->getRoot();
+            this->setRoot(NULL);
+            delete this->right;
+            delete this->left;
+            this->right = NULL;
+            this->left = NULL;
+            delete this;
+            return temp;
+        }
+        else{
+            BST* temp = this->getRight()->minimumRoot();
+            
+            this->getRoot()->setWord(temp->getRoot()->getWord());
+            this->getRoot()->setCount(temp->getRoot()->getCount());
+
+            this->setRight(this->getRight()->remove(this->getRoot()->getWord()));
+            return this;
+        }
+    }
+    else if(this->getRoot()->getWord() < word){
+        this->setRight(this->getRight()->remove(word));
+    }
+    else{
+        this->setLeft(this->getLeft()->remove(word));
+    }
     
 }
 
