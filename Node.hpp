@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 //
 //  Node.hpp
 //  130a Project 1

@@ -21,7 +21,7 @@ HashTable::HashTable(int dataSize){
     count = 0;
     largestSearchTraversal = 0;
     hashArray = new Node[size];
-    countArray = new bool[size];
+    onceOccupiedAt = new bool[size];
     emptyAt = new bool[size];
     for (int i = 0; i<size; i++){
         onceOccupiedAt[i] = false;
