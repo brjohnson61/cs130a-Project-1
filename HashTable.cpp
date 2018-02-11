@@ -31,47 +31,60 @@ HashTable::HashTable(int dataSize){
 
 HashTable::~HashTable(){
     delete [] hashArray;
+    delete [] onceOccupiedAt;
+    delete [] isEmptyAt;
 }
 
 bool HashTable::searchWord(string word){
     int index = hashWord1(word);
+    cout << "Index: "<< index << endl;
     int traversal = 0;
-    if (hashArray[index].getWord() == word)
-        return true;
     int offset = hashWord2(word);
 
     while (onceOccupiedAt[index]){
-        if (traversal > largestInsertTraversal)
+        if (traversal > largestInsertTraversal){
+            cout << "Exceeded largest insert traversal; Item is not in the array"<< endl;
             return false;
+        }
         if (isEmptyAt[index]){
+            cout << "Is empty at index" << endl;
             traversal ++;
-            index = (index + offset * traversal) % size;
+            index = (((index + offset)%size) * traversal) % size;
         }else {
             if (hashArray[index].getWord() == word){
+                cout << "Item found at index: " << index << endl;
+                cout << "Traversal:" << traversal << endl;
                 return true;
+                
             }
 
             traversal++;
-            index = (index + offset * traversal) % size;
+            index = (((index + offset)%size) * traversal) % size;
+            cout << "Next index: " << index << endl;
         }
     }
+    cout << "Word is not in the array" << endl;
     return false;
 }
 
 bool HashTable::insertWord(string word){
+    
     int traversal = 0;
     Node node = Node(word);
+
     if( count > (size*2/3))
         return false;
+    cout << "Inserting word: " << word << endl;
     int index = hashWord1(word);
+
     if (isEmptyAt[index]){
         hashArray[index] = node;
         onceOccupiedAt[index] = true;
         isEmptyAt[index] = false;
         count ++;
-        cout << "Entered " << word << "at index: " << index<< endl;
-        cout << "Traversal: " << traversal;
-        cout << "Count of items in Hash Table: "<< count << endl;
+        cout << "Inserted " << word << " at index: " << index<< endl;
+        cout << "Traversal: " << traversal << endl;
+        cout << "Count: "<< count << endl;
         return true;
     }
     else{
@@ -82,30 +95,69 @@ bool HashTable::insertWord(string word){
             cout << "Collision happened at index: " << index <<  endl;
             if (hashArray[index].getWord() == node.getWord()){
                 hashArray[index].incrementCount();
-                cout << "Count of " << word << " incremented. Count: "<< hashArray[index].getCount() << endl;
-                return false;
+                cout << "Count of " << word << " incremented. Count  of word: "<< hashArray[index].getCount() << endl;
+                cout << "Traversal: " << traversal << endl;
+                cout << "Count: " << count << endl;
+                return true;
                 
             }
             
             traversal++;
-            index = (index + offset * traversal) % size;
+            index = (((index + offset)%size) * traversal) % size;
+            cout << "Traversal: "<< traversal << endl;
         }
-        if (traversal > largestInsertTraversal){
-            largestInsertTraversal = traversal;
-        }
-
+       
         hashArray[index] = node;
         onceOccupiedAt[index] = true;
         isEmptyAt[index] = false;
         count++;
-        cout << "At Index: "<< index << endl;
-        cout << "Count of items in Hash Table: "<< count << endl;
-        cout << "Largest Travesal: "<<largestInsertTraversal << endl;
+        cout << "Inserted word "<< word << " at index: "<< index << endl;
+        cout << "Traversal: "<< traversal << endl;;
+        cout << "Count: "<< count << endl;
+
+         if (traversal > largestInsertTraversal){
+            largestInsertTraversal = traversal;
+            cout << "LargestInsertTravesal changed to :" << largestInsertTraversal << endl;
+        }
+
         return true;
     }
 }
 
 bool HashTable::deleteWord(string word){
+    cout << "Deleting word: " << word << endl;
+    int index = hashWord1(word);
+    int offset = hashWord2(word);
+    int traversal = 0;
+
+    while (onceOccupiedAt[index]){
+        if (traversal > largestInsertTraversal){
+            return false;
+        }
+        if (isEmptyAt[index]){
+            cout << "Empty at index: " << index << endl;
+            traversal ++;
+            index = (((index + offset)%size) * traversal) % size;
+        }else {
+            if (hashArray[index].getWord() == word){
+                if (hashArray[index].getCount() < 2){
+                    isEmptyAt[index] = true;
+                    cout << "Sucessfully deleted word" << endl;
+                    return true;
+                }else{
+                    cout << "Word had count greater than 1" << endl;
+                    hashArray[index].decrementCount();
+                    cout << "Word count changed to " << hashArray[index].getCount() << endl;
+                    return true;
+                }
+                
+            }
+
+            traversal++;
+            index = (((index + offset)%size) * traversal) % size;
+        }
+    }
+    cout << "Word is not in the array" << endl;
     return false;
 }
 
