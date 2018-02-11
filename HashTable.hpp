@@ -38,9 +38,9 @@ private:
     int size;
     Node *hashArray;
     bool *onceOccupiedAt;
-    bool *emptyAt;
+    bool *isEmptyAt;
     int count;
-    int largestSearchTraversal;
+    int largestInsertTraversal;
     
 
 };

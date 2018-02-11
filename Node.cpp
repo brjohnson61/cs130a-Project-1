@@ -22,7 +22,7 @@ Node::Node(){
 
 //String-only constructor
 Node::Node(string word){
-    
+    transform(word.begin(), word.end(), word.begin(), ::tolower);
     this->word = word;
     count = 1;
 }
@@ -61,6 +61,7 @@ void Node::printNode(){
 
 //Setter for the node's word
 void Node::setWord(string word){
+    transform(word.begin(), word.end(), word.begin(), ::tolower);
     this->word = word;
 }
 
