@@ -24,8 +24,8 @@ HashTable::HashTable(int dataSize){
     countArray = new bool[size];
     emptyAt = new bool[size];
     for (int i = 0; i<size; i++){
-        countArray[i] = false;
-        emptyAt[i] = false;
+        onceOccupiedAt[i] = false;
+        emptyAt[i] = true;
     }
 }
 
@@ -40,14 +40,14 @@ bool HashTable::searchWord(string word){
 
 bool HashTable::insertWord(string word){
     int traversal = 0;
-    Node node = Node(word,1);
+    Node node = Node(word);
     if( count > (size*2/3))
         return false;
     int index = hashWord1(word);
-    if (!emptyAt[index]){
+    if (emptyAt[index]){
         hashArray[index] = node;
-        countArray[index] = true;
-        emptyAt[index] = true;
+        onceOccupiedAt[index] = true;
+        emptyAt[index] = false;
         count ++;
         cout << "Count of items in Hash Table: "<< count << endl;
         return true;
@@ -55,7 +55,7 @@ bool HashTable::insertWord(string word){
     else{
         
         cout << "Collision happened" << endl;
-        while(emptyAt[index]){
+        while(!emptyAt[index]){
             if (hashArray[index].getWord() == node.getWord()){
                 hashArray[index].incrementCount();
                 cout << "Count of " << word << " incremented. Count: "<< hashArray[index].getCount() << endl;
@@ -71,8 +71,8 @@ bool HashTable::insertWord(string word){
         }
 
         hashArray[index] = node;
-        countArray[index] = true;
-        emptyAt[index] = true;
+        onceOccupiedAt[index] = true;
+        emptyAt[index] = false;
         count++;
         cout << "Count of items in Hash Table: "<< count << endl;
         cout << "Largest Travesal: "<<largestSearchTraversal << endl;

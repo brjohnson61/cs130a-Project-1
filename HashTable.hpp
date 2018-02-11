@@ -37,7 +37,7 @@ public:
 private:
     int size;
     Node *hashArray;
-    bool *countArray;
+    bool *onceOccupiedAt;
     bool *emptyAt;
     int count;
     int largestSearchTraversal;
