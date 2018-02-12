@@ -40,6 +40,7 @@ public:
 
     bool search(string word);
     void insert(string word);
+    void insert(Node* other);
     BST* remove(string word);
     void sort(void);
     void rangeSearch(string startWord, string endWord);

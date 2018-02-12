@@ -170,6 +170,33 @@ void BST::insert(string word){
     }
 }
 
+void BST::insert(Node* other){
+    if(this->getRoot() == NULL){
+        this->setRoot(new Node(other));
+    }
+    else if(this->getRoot()->getWord().empty()){
+        this->getRoot()->setWord(other->getWord());
+        this->getRoot()->setCount(other->getCount());
+    }
+    else{
+        if(this->getRoot()->getWord() == other->getWord()){
+            this->getRoot()->setCount(this->getRoot()->getCount()+other->getCount());
+        }
+        else if(this->getRoot()->getWord() < other->getWord()){
+            if(this->getRight() == NULL){
+                this->setRight(new BST());
+            }
+            this->getRight()->insert(other);
+        }
+        else{
+            if(this->getLeft() == NULL){
+                this->setLeft(new BST());
+            }
+            this->getLeft()->insert(other);
+        }
+    }
+}
+
 BST* BST::remove(string word){
     if(this->root == NULL){
         return this;
