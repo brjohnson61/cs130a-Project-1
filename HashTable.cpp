@@ -8,11 +8,13 @@
 
 #include "HashTable.hpp"
 #include "Node.hpp"
+#include "BST.hpp"
 #include <string.h>
 #include <math.h>
 #include <iostream>
 #include <stdio.h>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -138,16 +140,30 @@ int HashTable::hashFunction2(string word){
 
 void HashTable::sortWords(){
     int itemsFound = 0;
+    BST* tempSortTree = new BST();
+
     for (int i = 0; i < size; i ++){
         if (itemsFound > count){
-            return
+            continue;
         }
         if (!isEmptyAt[i]){
-            return
+            tempSortTree->insert(&hashArray[i]);
         }
     }
+    tempSortTree->sort();
 }
 
 void HashTable::rangeSearch(string word1, string word2){
+    int itemsFound = 0;
+    BST* tempSortTree = new BST();
 
+    for (int i = 0; i < size; i ++){
+        if (itemsFound > count){
+            continue;
+        }
+        if (!isEmptyAt[i]){
+            tempSortTree->insert(&hashArray[i]);
+        }
+    }
+    tempSortTree->rangeSearch(word1, word2);
 }
