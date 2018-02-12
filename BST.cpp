@@ -9,10 +9,15 @@
 
 #include <string>
 #include <stdio.h>
+#include <iostream>
 #include "BST.hpp"
 
 
 using namespace std;
+
+void outputFileWrite(string out){
+
+}
 
 BST::BST(BST* otherTree){
     if(otherTree->getRoot() != NULL){
@@ -166,34 +171,29 @@ void BST::insert(string word){
 }
 
 BST* BST::remove(string word){
-    if(this->getRoot() == NULL){
+    if(this->root == NULL){
         return this;
     }
     
     if(this->getRoot()->getWord() == word){
-        if(this->getRoot()->getCount() > 1){
+        if(this->root->getCount() > 1){
             this->getRoot()->decrementCount();
             return this;
         }
         if(this->getRight()==NULL && this->getLeft()==NULL){
-                delete this->getRoot();
+                delete this;
                 return NULL;
         }
         else if((this->getRight() == NULL) != (this->getLeft() == NULL)){
             BST* temp;
             if(this->getRight()==NULL){
                 temp = this->getLeft();
-                
+                this->left = NULL;
             }
             else{
                 temp = this->getRight();
+                this->right = NULL;
             }
-            delete this->getRoot();
-            this->setRoot(NULL);
-            delete this->right;
-            delete this->left;
-            this->right = NULL;
-            this->left = NULL;
             delete this;
             return temp;
         }
@@ -208,18 +208,55 @@ BST* BST::remove(string word){
         }
     }
     else if(this->getRoot()->getWord() < word){
-        this->setRight(this->getRight()->remove(word));
+        if(this->getRight() == NULL){
+            return this;
+        }
+        else{
+            this->right = this->right->remove(word);
+            return this;
+        }
     }
     else{
-        this->setLeft(this->getLeft()->remove(word));
-    }
-    
+        if(this->getLeft() == NULL){
+            return this;
+        }
+        else{
+            this->left = this->left->remove(word);
+            return this;
+        }
+    } 
 }
 
 void BST::sort(){
-
+    if(this->getLeft() != NULL){
+        this->getLeft()->sort();
+    }
+    outputFileWrite(this->getRoot()->getWord());
+    if(this->getRight() != NULL){
+        this->getRight()->sort();
+    }
 }
 
 void BST::rangeSearch(string startWord, string endWord){
-
+    if(this->getRoot()->getWord() >= startWord && this->getRoot()->getWord() <= endWord){
+        if(this->getLeft() != NULL){
+            this->getLeft()->rangeSearch(startWord, endWord);
+        }
+        cout << this->getRoot()->getWord() << endl;
+        if(this->getRight() != NULL){
+            this->getRight()->rangeSearch(startWord, endWord);
+        }
+    }
+    else if(this->getRoot()->getWord() < startWord){
+        if(this->getRight() != NULL){
+            this->getRight()->rangeSearch(startWord, endWord);
+        }
+    }
+    else if(this->getRoot()->getWord() > endWord){
+        if(this->getLeft() != NULL){
+            this->getLeft()->rangeSearch(startWord, endWord);
+        }
+    }
 }
+
+

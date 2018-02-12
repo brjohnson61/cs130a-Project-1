@@ -178,6 +178,7 @@ int number = 10;
                 cin >> firstArgString;
                 (mainBST->search(firstArgString)) ? cout << "true" : cout << "false";
                 cout << endl;
+                mainBST->printTree();
                 break;
             case 2:
                 (mainBST->getRoot() == NULL) ? cout << "NULL" : cout << "not NULL";
@@ -188,13 +189,14 @@ int number = 10;
                 cout << endl;
                 mainBST->insert(firstArgString);
                 cout << "*inserted*" << endl;
-                mainBST->getRoot()->printNode();
+                mainBST->printTree();
                 break;
             case 3:
                 cout << "Enter word to delete: " << endl;
                 cin >> firstArgString;
                 mainBST->remove(firstArgString);
                 cout << "*removed*" << endl;
+                mainBST->printTree();
                 break;
             case 4:
                 cout << "Starting sort operation...";
@@ -208,6 +210,7 @@ int number = 10;
                 cout << "Second word (upper bound): " << endl;
                 cin >> secondArgString;
                 mainBST->rangeSearch(firstArgString, secondArgString);
+                mainBST->printTree();
                 break;
             default:
                 break;
