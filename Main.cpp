@@ -118,13 +118,13 @@ int number = 10;
     cout << endl ;
     cout << endl;
 
-    bool fernandoSearch = table1.searchWord("fernando");
+    int fernandoSearch = table1.searchWord("fernando");
     cout << "Fernando Search: " << fernandoSearch << endl;
     cout << endl << endl;
-    bool traversalSearch = table1.searchWord("traversal");
+    int traversalSearch = table1.searchWord("traversal");
     cout << "Traversal Search: " << traversalSearch << endl;
     cout << endl << endl;
-    bool grantSearch =  table1.searchWord("grant");
+    int grantSearch =  table1.searchWord("grant");
     cout << "Grant Search: " << grantSearch << endl; 
     cout << endl << endl;
    
@@ -137,13 +137,13 @@ int number = 10;
     cout << endl << endl;
 
 
-    bool fernandoSearch2 = table1.searchWord("fernando");
+    int fernandoSearch2 = table1.searchWord("fernando");
     cout << "Fernando Search 2: " << fernandoSearch2 << endl;
     cout << endl << endl;
-    bool traversalSearch2 = table1.searchWord("traversal");
+    int traversalSearch2 = table1.searchWord("traversal");
     cout << "Traversal Search 2: " << traversalSearch2 << endl;
     cout << endl << endl;
-    bool grantSearch2 =  table1.searchWord("grant");
+    int grantSearch2 =  table1.searchWord("grant");
     cout << "Grant Search 2: " << grantSearch2 << endl; 
     cout << endl << endl;   
 

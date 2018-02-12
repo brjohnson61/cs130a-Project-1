@@ -24,13 +24,13 @@ public:
     HashTable(int dataSize);
     ~HashTable();
 
-    bool searchWord(string word);
+    int searchWord(string word);
     bool insertWord(string word);
     bool deleteWord(string word);
     void sortWords(void);
     void rangeSearch(string word1, string word2);
-    int hashWord1(string word);
-    int hashWord2(string word);
+    int hashFunction1(string word);
+    int hashFunction2(string word);
     
 
 
