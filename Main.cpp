@@ -4,55 +4,37 @@
 #include "Node.hpp"
 #include "HashTable.hpp"
 #include "BST.hpp"
+#include <iomanip>
+#include <fstream>
 
 using namespace std;
 
 int main(){
+    string tempWord;
+    ifstream myfile;
+    myfile.open("\\hotels-small\\beijing\\example.txt");
+    int count = 0; 
 
-string input = "Matty Does Not FUCK";
-int number = 10;
+    BST* mainBST = new BST();
+    HashTable* table = new HashTable(100);
 
-
-// while(input != "exit"){
-//     cout << "input node word or 'exit' to quit: " << endl;
-//     cin >> input;
-//     cout << "input count: " << endl;
-//     cin >> number;
-
-//     cout << "input: " << input << endl;
-//     cout << "count: " << number << endl;
-
-    Node* temp = new Node(input, number);
-    Node* temp1 = new Node(input + "1");
-    Node* temp2 = new Node();
-
-    cout << "Node 0: ";
-    (*temp).printNode();
-    cout << "Updating count to 18" << endl;
-    temp->setCount(18);
-    (*temp).printNode();
-    cout << "Node 1: ";
-    (*temp1).printNode();
-    cout << endl;
-    cout << "Node 2: ";
-    (*temp2).printNode();
-    cout << endl;
-
-
-    // Hash Table Testing
+    if (!myfile.is_open()){
+        cout << "Unable to open file" << endl;
+        return 0 ; 
+    }
+    
+    
+    while (myfile >> tempWord){
+        count ++;
+        table->insertWord(tempWord);
+        mainBST->insert(tempWord);
+    }
     
 
-    
-
-
-
-    // END Hash Table Testing
     cout << endl << endl;
     cout << "Begin Final Turnin Select Menu" << endl;
 
-    BST* mainBST = new BST();
-    (mainBST->getRoot() == NULL) ? cout << "NULL" : cout << "not NULL";
-    cout << endl;
+    
 
     while(1){
         int userMenuSelect;
@@ -73,7 +55,10 @@ int number = 10;
                 cin >> firstArgString;
                 (mainBST->search(firstArgString)) ? cout << "true" : cout << "false";
                 cout << endl;
-                mainBST->printTree();
+                (table->searchWord(firstArgString) != -1)? cout << "true": cout << "false";
+                cout << endl;
+                //mainBST->printTree();
+
                 break;
             case 2:
                 (mainBST->getRoot() == NULL) ? cout << "NULL" : cout << "not NULL";
@@ -83,6 +68,7 @@ int number = 10;
                 (mainBST->getRoot() == NULL) ? cout << "NULL" : cout << "not NULL";
                 cout << endl;
                 mainBST->insert(firstArgString);
+                table->insertWord(firstArgString);
                 cout << "*inserted*" << endl;
                 mainBST->printTree();
                 break;
@@ -90,12 +76,14 @@ int number = 10;
                 cout << "Enter word to delete: " << endl;
                 cin >> firstArgString;
                 mainBST->remove(firstArgString);
+                table->deleteWord(firstArgString);
                 cout << "*removed*" << endl;
                 mainBST->printTree();
                 break;
             case 4:
                 cout << "Starting sort operation...";
                 mainBST->sort();
+                table->sortWords();
                 cout << "sorted." << endl;
                 break;
             case 5:
@@ -105,6 +93,7 @@ int number = 10;
                 cout << "Second word (upper bound): " << endl;
                 cin >> secondArgString;
                 mainBST->rangeSearch(firstArgString, secondArgString);
+                table->rangeSearch(firstArgString, secondArgString);
                 mainBST->printTree();
                 break;
             default:
