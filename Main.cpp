@@ -6,7 +6,7 @@
 #include "BST.hpp"
 #include <iomanip>
 #include <fstream>
-#include <filesystem>
+#include <experimental/filesystem>
 
 using namespace std;
 
@@ -31,6 +31,11 @@ int main(){
         mainBST->insert(tempWord);
     }
     
+
+    
+    //Hash  Testing
+    HashTable myTable = HashTable(10);
+
 
     cout << endl << endl;
     cout << "Begin Final Turnin Select Menu" << endl;

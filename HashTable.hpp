@@ -29,8 +29,8 @@ public:
     bool deleteWord(string word);
     void sortWords(void);
     void rangeSearch(string word1, string word2);
-    int hashFunction1(string word);
-    int hashFunction2(string word);
+    int hashFunction(string word);
+    void printHashTable(void);
     
 
 

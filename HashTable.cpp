@@ -39,9 +39,9 @@ HashTable::~HashTable(){
 }
 
 int HashTable::searchWord(string word){
-    int index = hashFunction1(word);
+    int index = hashFunction(word);
     int traversal = 0;
-    int offset = hashFunction2(word);
+    
 
     while (onceOccupiedAt[index]){
         if (traversal > largestInsertTraversal){
@@ -53,7 +53,7 @@ int HashTable::searchWord(string word){
             }
         }
             traversal++;
-            index = (((index + offset)%size) * traversal) % size;
+            index = (index + 1) % size;
     }
     return -1;
 }
@@ -65,7 +65,7 @@ bool HashTable::insertWord(string word){
 
     if( count > (size*2/3))
         return false;
-    int index = hashFunction1(word);
+    int index = hashFunction(word);
 
     if (isEmptyAt[index]){
         hashArray[index] = node;
@@ -76,15 +76,15 @@ bool HashTable::insertWord(string word){
     }
     else{
 
-        int offset = hashFunction2(word);
         while(!isEmptyAt[index]){
+            int tempIndex = 0;
             if (hashArray[index].getWord() == node.getWord()){
                 hashArray[index].incrementCount();
                 return true;
             }
-            
+
             traversal++;
-            index = (((index + offset)%size) * traversal) % size;
+            index = (index + 1 ) % size;
         }
        
         hashArray[index] = node;
@@ -109,7 +109,7 @@ bool HashTable::deleteWord(string word){
     return true;
 }
 
-int HashTable::hashFunction1(string word){
+int HashTable::hashFunction(string word){
     int stringLength = word.length(); 
     int index;
     unsigned int sum = 0;
@@ -124,19 +124,6 @@ int HashTable::hashFunction1(string word){
     return index;
 }
 
-int HashTable::hashFunction2(string word){
-    int stringLength = word.length(); 
-    int index;
-    unsigned int sum = 0;
-    char wordArr[stringLength + 1];
-    transform(word.begin(), word.end(), word.begin(), ::tolower);
-    strcpy(wordArr, word.c_str());
-    for (int i = 0; i< stringLength; i++){
-        sum = sum + (stringLength-1)*pow((int)(wordArr[i]), (stringLength-1)-i);
-    }
-    index = 1 + sum/size %(size-1);
-    return index;
-}
 
 void HashTable::sortWords(){
     int itemsFound = 0;
@@ -166,4 +153,15 @@ void HashTable::rangeSearch(string word1, string word2){
         }
     }
     tempSortTree->rangeSearch(word1, word2);
+}
+
+
+
+void HashTable::printHashTable(){
+    int itemsFound = 0;
+    for (int i = 0; i < size ; i ++ ){
+        if (!isEmptyAt[i]){
+            cout << i << " : " << hashArray[i].getWord() << endl;
+        }
+    }
 }
