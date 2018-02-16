@@ -79,3 +79,21 @@ void Node::incrementCount(){
 void Node::decrementCount(){
     this->count--;
 }
+
+bool Node::operator==(Node& rhs){
+    if (this->word == rhs.getWord())
+        return true;
+    return false;
+}
+
+bool Node::operator>( Node& rhs){
+    if (this->word > rhs.getWord())
+        return true;
+    return false;
+}
+
+bool Node::operator<(Node& rhs){
+    if (this->word < rhs.getWord())
+        return true;
+    return false;
+}

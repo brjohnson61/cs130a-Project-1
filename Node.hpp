@@ -39,6 +39,10 @@ public:
     void setCount(int count);
     void incrementCount(void);
     void decrementCount(void);
+    bool operator==( Node& rhs);
+    bool operator<( Node& rhs);
+    bool operator>( Node& rhs);
+
     
 };
 

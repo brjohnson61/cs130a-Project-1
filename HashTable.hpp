@@ -44,4 +44,9 @@ private:
     
 
 };
+
+void mergeSort(Node array[], int leftIndex, int rightIndex);
+void merge(Node array[], int leftIndex, int middle, int rightIndex);
+
 #endif /* HashTable_hpp */
+

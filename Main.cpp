@@ -6,7 +6,7 @@
 #include "BST.hpp"
 #include <iomanip>
 #include <fstream>
-#include <experimental/filesystem>
+
 
 using namespace std;
 
@@ -16,12 +16,15 @@ int main(){
     myfile.open("\\hotels-small\\beijing\\example.txt");
     int count = 0; 
 
+    
     BST* mainBST = new BST();
     HashTable* table = new HashTable(100);
 
+
+    /*
     if (!myfile.is_open()){
         cout << "Unable to open file" << endl;
-        return 0 ; 
+         return 0;
     }
     
     
@@ -30,13 +33,61 @@ int main(){
         table->insertWord(tempWord);
         mainBST->insert(tempWord);
     }
-    
+    */
 
     
     //Hash  Testing
     HashTable myTable = HashTable(10);
+    myTable.insertWord("fernando");
+    myTable.printHashTable();
+    cout << endl << endl;
+    myTable.insertWord("blake");
+    myTable.printHashTable();
+    cout << endl << endl;
+    myTable.insertWord("caleb");
+    myTable.printHashTable();
+    cout << endl << endl;
+    myTable.insertWord("matty");
+    myTable.printHashTable();
+    cout << endl << endl;
+    myTable.insertWord("seiji");
+    myTable.printHashTable();
+    cout << endl << endl;
+    myTable.insertWord("grant");
+    myTable.printHashTable();
+    cout << endl << endl;
+    myTable.insertWord("ricky");
+    myTable.printHashTable();
+    cout << endl << endl;
+    myTable.insertWord("waylon");
+    myTable.printHashTable();
+    cout << endl << endl;
+    myTable.insertWord("komei");
+    myTable.printHashTable();
+    cout << endl << endl;
+    
+    myTable.deleteWord("matty");
+    myTable.printHashTable();
+    cout << endl << endl;
 
 
+    int index = myTable.searchWord("waylon");
+    cout << "Index: " << index << endl;
+    myTable.printHashTable();
+    cout << endl << endl;
+    
+    
+
+    Node test1 = Node("animal",1);
+    Node test2 = Node("art",1);
+    Node test3 = Node("ANIMAL",1);
+
+    bool test =  test1 == test2;
+
+
+    cout << "Test: " << test << endl;
+    //myTable.sortWords();
+    // End of testing
     cout << endl << endl;
     cout << "Begin Final Turnin Select Menu" << endl;
 

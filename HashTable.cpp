@@ -106,6 +106,7 @@ bool HashTable::deleteWord(string word){
         return false;
     }
     isEmptyAt[index] = true;
+    count --;
     return true;
 }
 
@@ -126,18 +127,22 @@ int HashTable::hashFunction(string word){
 
 
 void HashTable::sortWords(){
-    int itemsFound = 0;
-    BST* tempSortTree = new BST();
-
-    for (int i = 0; i < size; i ++){
-        if (itemsFound > count){
-            continue;
-        }
+    Node* tempHashArray = new Node [count];
+    int tempCount = 0;
+    for (int i = 0; i < size; i ++ ){
         if (!isEmptyAt[i]){
-            tempSortTree->insert(&hashArray[i]);
+            tempHashArray[tempCount] = hashArray[i];
+            tempCount++;
         }
     }
-    tempSortTree->sort();
+    cout << "Before Merge" << endl;
+    mergeSort(tempHashArray, 0, size -1);
+    cout << "AfterMerge"<< endl;
+
+    for(int i = 0; i < count; i ++){
+        tempHashArray[i].printNode();
+    }
+
 }
 
 void HashTable::rangeSearch(string word1, string word2){
@@ -164,4 +169,74 @@ void HashTable::printHashTable(){
             cout << i << " : " << hashArray[i].getWord() << endl;
         }
     }
+}
+
+
+void merge(Node array[], int leftIndex, int middle, int rightIndex){
+    cout << "Merge" << endl;
+    int i, j,k;
+    int ar1Length = middle - leftIndex+ 1;
+    int ar2Length = rightIndex - middle;
+    
+    Node ar1[ar1Length];
+    Node ar2[ar2Length];
+
+    for (int i = 0; i < ar1Length ; i ++){
+        ar1[i] = array[leftIndex+i];
+    }
+    for (int j = 0; j < ar2Length; j++ ){
+        ar2[j] = array[middle+j+1];
+    }
+
+    i = 0;
+    j = 0; 
+    k = leftIndex;
+    while ( (i < ar1Length) && (j < ar2Length) ){
+        cout << "In Merge While loop" << endl;
+        if ((ar1[i] < ar2[j]) || (ar1[i] == ar2[j])){
+            cout << "Item in array 1 is less than or equal to item in array 2 " << endl;
+            cout << "WordA: "<< ar1[i].getWord() << endl;
+            cout << "WordB: "<< ar2[j].getWord() << endl; 
+            cout << "I: " << i << endl;
+            cout << "J:" << j << endl;
+            cout << "Ar1 Length: " << ar1Length << endl;
+            cout << "Ar2 Length: " << ar2Length << endl; 
+            array[k] = ar1[i];
+            i++;
+            k++;
+        }else{
+             cout << "Item in array 1 is greater than item in array 2 " << endl;
+            array[k] = ar2[j];
+            j++;
+            k++;
+        }
+    }
+    while (i < ar1Length){
+        cout << "Finish first half of array, Index: "<< i << endl;
+        cout << "array 1 length: " << ar1Length << endl;
+        array[k] = ar1[i];
+        i++;
+        k++;
+    }
+
+    while (j < ar2Length){
+        cout << "Finish second half of array, Index:" << j<<  endl;
+        array[k] = ar2[j];
+        j++;
+        k++;
+    }
+
+}
+
+void mergeSort(Node array[], int leftIndex, int rightIndex){
+    cout << "MergeSort"<< endl;
+    if (leftIndex < rightIndex){
+        int middle = (leftIndex+rightIndex)/2;
+
+        mergeSort(array, leftIndex, middle);
+        mergeSort(array, middle+1, rightIndex);
+
+        merge(array, leftIndex, middle , rightIndex);
+    }
+
 }
