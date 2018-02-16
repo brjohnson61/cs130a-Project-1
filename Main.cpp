@@ -9,6 +9,7 @@
 #include <experimental/filesystem>
 #include <vector>
 #include <cstring>
+#include <chrono>
 
 
 namespace fs = std::experimental::filesystem;
@@ -43,67 +44,38 @@ void readFilesToVec(vector<string>& fileNames, string path){
 int main(){
 
     BST* mainBST = new BST();
-    HashTable* table = new HashTable(100);
+    
     vector<string> fileList;
 
     readFilesToVec(fileList, "hotels-small");
 
     unsigned int count = 0;
     string word;
-
-    for(int i=0; i< fileList.size(); i++){
+    int wordCount = 0;
+    auto start = chrono::high_resolution_clock::now();
+    for(int i=0; i< 2; i++){
         ifstream inFile(fileList[i].c_str());
         string temp = "";
         while(inFile >> temp){
             mainBST->insert(temp);
+            wordCount++;
+        }
+        inFile.close();
+    }
+    auto finish = chrono::high_resolution_clock::now();
+    chrono::duration<double> elapsed = finish - start;
+    cout << "Elapsed Time: " << elapsed.count() << " s\n";
+
+    HashTable* table = new HashTable(wordCount);
+    for (int i = 0; i<2;i++){
+        ifstream inFile(fileList[i].c_str());
+        string temp = "";
+        while(inFile >> temp){
+            table->insertWord(temp);
         }
         inFile.close();
     }
 
-    // // ifstream inFile("hotels-small//beijing//china_beijing_autumn_garden_courtyard_hotel");
-    // // cout <<  << endl;
-    // // while(inFile >> word){
-    // //     cout << word << endl;
-    // // }
-    // // inFile.close();
-
-    // // for(int i = 0; i < fileList.size(); i++){
-    // //     ifstream inFile;
-    // //     char *cFile = new char[fileList[i].length()+1];
-    // //     strcpy(cFile, fileList[i].c_str());
-    // //     inFile.open(cFile);
-    // //     cout << fileList[i] << endl;
-    // //     while(inFile >> word){
-    // //         cout << word << endl;
-    // //     }
-    // //     inFile.close();
-    // // }
-
-    // vector<string> testvec;
-
-    // string tempString = "";
-
-    // for(int i = 0; i< fileList.size(); i++){
-    //     for(int j=0; j< fileList[i].length(); j++){
-    //         tempString += fileList[i].at(j);
-    //     }
-    //     testvec.push_back(tempString);
-    //     tempString = "";
-    // }
-
-    // //testvec.push_back(tempString);
-
-    // cout << fileList[2] << endl;
-    // string myString = testvec[0];
-
-    // ifstream inFile;
-    // inFile.open(myString.c_str());
-    // string car;
-    // while(inFile >> car){
-    //     cout << car << endl;
-    //     mainBST->insert(car);
-    // }
-    // inFile.close();
 
     cout << endl << endl;
     cout << "Begin Final Turnin Select Menu" << endl;
@@ -123,28 +95,44 @@ int main(){
 
         switch(userMenuSelect){
             case 1: 
+            {
                 cout << "Enter word to search for: " << endl;
                 cin >> firstArgString;
+                
+                auto start0 = chrono::high_resolution_clock::now();
                 (mainBST->search(firstArgString)) ? cout << "true" : cout << "false";
+                auto finish0 = chrono::high_resolution_clock::now();
                 cout << endl;
+                chrono::duration<double> elapsed0 = finish0 - start0;
+                cout << "BST: " << elapsed0.count() << " s\n";
+ 
+                auto start1 = chrono::high_resolution_clock::now();  
                 (table->searchWord(firstArgString) != -1)? cout << "true": cout << "false";
+                auto finish1 = chrono::high_resolution_clock::now();
                 cout << endl;
-                //mainBST->printTree();
+                chrono::duration<double> elapsed1 = finish1 - start1;
+                cout << "HashTable: " << elapsed1.count() << " s\n";  
+
 
                 break;
+            }
             case 2:
+            {
                 (mainBST->getRoot() == NULL) ? cout << "NULL" : cout << "not NULL";
                 cout << endl;
                 cout << "Enter word to insert: " << endl;
                 cin >> firstArgString;
                 (mainBST->getRoot() == NULL) ? cout << "NULL" : cout << "not NULL";
                 cout << endl;
+
                 mainBST->insert(firstArgString);
                 table->insertWord(firstArgString);
                 cout << "*inserted*" << endl;
                 mainBST->printTree();
                 break;
+            }
             case 3:
+            {
                 cout << "Enter word to delete: " << endl;
                 cin >> firstArgString;
                 mainBST->remove(firstArgString);
@@ -152,13 +140,18 @@ int main(){
                 cout << "*removed*" << endl;
                 mainBST->printTree();
                 break;
+            }
             case 4:
+             {
                 cout << "Starting sort operation...";
+                mainBST->printTree();
                 mainBST->sort();
                 table->sortWords();
                 cout << "sorted." << endl;
                 break;
+             }
             case 5:
+            {
                 cout << "Enter two words for ranged search." << endl;
                 cout << "First word (lower bound): " << endl;
                 cin >> firstArgString;
@@ -168,9 +161,13 @@ int main(){
                 table->rangeSearch(firstArgString, secondArgString);
                 mainBST->printTree();
                 break;
+            }
             default:
+            {
                 break;
+            }
         }
     }
     return 0;
 }
+

@@ -46,4 +46,6 @@ public:
     
 };
 
+void outputToFile(string word, string pathName);
+
 #endif /* Node_hpp */

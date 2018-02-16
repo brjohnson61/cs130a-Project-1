@@ -15,9 +15,6 @@
 
 using namespace std;
 
-void outputFileWrite(string out){
-
-}
 
 BST::BST(BST* otherTree){
     if(otherTree->getRoot() != NULL){
@@ -105,6 +102,9 @@ void BST::printTree(){
         this->getLeft()->printTree();
     }
     this->getRoot()->printNode();
+    string count = to_string(this->getRoot()->getCount());
+    string input = "Word: " + this->getRoot()->getWord() + " Count:" + count;
+    outputToFile(input, "treeStructure.txt");
     if(this->getRight() != NULL){
         this->getRight()->printTree();
     }
@@ -152,10 +152,10 @@ void BST::insert(string word){
         this->getRoot()->setCount(1);
     }
     else{
-        if(this->getRoot()->getWord() == word){
+        if(this->getRoot()->getWord().compare(word) == 0){
             this->getRoot()->incrementCount();
         }
-        else if(this->getRoot()->getWord() < word){
+        else if(this->getRoot()->getWord().compare(word) < 0){
             if(this->getRight() == NULL){
                 this->setRight(new BST());
             }
@@ -258,7 +258,7 @@ void BST::sort(){
     if(this->getLeft() != NULL){
         this->getLeft()->sort();
     }
-    outputFileWrite(this->getRoot()->getWord());
+    outputToFile(this->getRoot()->getWord(), "binaryOutput.txt");
     if(this->getRight() != NULL){
         this->getRight()->sort();
     }

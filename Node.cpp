@@ -10,6 +10,7 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
+#include<fstream>
 
 
 using namespace std;
@@ -96,4 +97,11 @@ bool Node::operator<(Node& rhs){
     if (this->word < rhs.getWord())
         return true;
     return false;
+}
+
+void outputToFile(string word, string pathName){
+    ofstream outputFile; 
+    outputFile.open(pathName, ios::app);
+    outputFile << word << endl;
+    outputFile.close();
 }

@@ -139,7 +139,7 @@ void HashTable::sortWords(){
     
 
     for(int i = 0; i < count; i ++){
-        tempHashArray[i].printNode();
+        outputToFile(tempHashArray[i].getWord(), "hashOutput.txt");
     }
 
 }
