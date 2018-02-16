@@ -4,6 +4,12 @@
         "xiosbase": "cpp",
         "xstring": "cpp",
         "iostream": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "filesystem": "cpp",
+        "algorithm": "cpp",
+        "list": "cpp",
+        "vector": "cpp",
+        "iosfwd": "cpp",
+        "xlocale": "cpp"
     }
 }

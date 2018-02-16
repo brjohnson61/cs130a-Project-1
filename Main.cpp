@@ -6,94 +6,107 @@
 #include "BST.hpp"
 #include <iomanip>
 #include <fstream>
+#include <experimental/filesystem>
+#include <vector>
+#include <cstring>
 
 
+namespace fs = std::experimental::filesystem;
 using namespace std;
 
-int main(){
-    string tempWord;
-    ifstream myfile;
-    myfile.open("\\hotels-small\\beijing\\example.txt");
-    int count = 0; 
 
-    
+//All credit for find_and_replace function goes to: http://bits.mdminhazulhaque.io/cpp/find-and-replace-all-occurrences-in-cpp-string.html
+void find_and_replace(string& source, string const& find, string const& replace)
+{
+    for(string::size_type i = 0; (i = source.find(find, i)) != string::npos;)
+    {
+        source.replace(i, find.length(), replace);
+        i += replace.length();
+    }
+}
+
+void readFilesToVec(vector<string>& fileNames, string path){
+     for(auto& p: fs::recursive_directory_iterator(path)){
+        string newPath = p.path().string();
+        if(!is_directory(p.path())){
+            int index = newPath.find("._");
+            if( index < 0){
+                find_and_replace(newPath, "/", "//");
+                fileNames.push_back(newPath);
+            }
+        }
+    }
+}
+
+
+
+int main(){
+
     BST* mainBST = new BST();
     HashTable* table = new HashTable(100);
+    vector<string> fileList;
 
+    readFilesToVec(fileList, "hotels-small");
 
-    /*
-    if (!myfile.is_open()){
-        cout << "Unable to open file" << endl;
-         return 0;
+    unsigned int count = 0;
+    string word;
+
+    for(int i=0; i< fileList.size(); i++){
+        ifstream inFile(fileList[i].c_str());
+        string temp = "";
+        while(inFile >> temp){
+            mainBST->insert(temp);
+        }
+        inFile.close();
     }
-    
-    
-    while (myfile >> tempWord){
-        count ++;
-        table->insertWord(tempWord);
-        mainBST->insert(tempWord);
-    }
-    */
 
-    
-    //Hash  Testing
-    HashTable myTable = HashTable(10);
-    myTable.insertWord("fernando");
-    myTable.printHashTable();
-    cout << endl << endl;
-    myTable.insertWord("blake");
-    myTable.printHashTable();
-    cout << endl << endl;
-    myTable.insertWord("caleb");
-    myTable.printHashTable();
-    cout << endl << endl;
-    myTable.insertWord("matty");
-    myTable.printHashTable();
-    cout << endl << endl;
-    myTable.insertWord("seiji");
-    myTable.printHashTable();
-    cout << endl << endl;
-    myTable.insertWord("grant");
-    myTable.printHashTable();
-    cout << endl << endl;
-    myTable.insertWord("ricky");
-    myTable.printHashTable();
-    cout << endl << endl;
-    myTable.insertWord("waylon");
-    myTable.printHashTable();
-    cout << endl << endl;
-    myTable.insertWord("komei");
-    myTable.printHashTable();
-    cout << endl << endl;
-    
-    myTable.deleteWord("matty");
-    myTable.printHashTable();
-    cout << endl << endl;
+    // // ifstream inFile("hotels-small//beijing//china_beijing_autumn_garden_courtyard_hotel");
+    // // cout <<  << endl;
+    // // while(inFile >> word){
+    // //     cout << word << endl;
+    // // }
+    // // inFile.close();
 
+    // // for(int i = 0; i < fileList.size(); i++){
+    // //     ifstream inFile;
+    // //     char *cFile = new char[fileList[i].length()+1];
+    // //     strcpy(cFile, fileList[i].c_str());
+    // //     inFile.open(cFile);
+    // //     cout << fileList[i] << endl;
+    // //     while(inFile >> word){
+    // //         cout << word << endl;
+    // //     }
+    // //     inFile.close();
+    // // }
 
-    int index = myTable.searchWord("waylon");
-    cout << "Index: " << index << endl;
-    myTable.printHashTable();
-    cout << endl << endl;
-    
-    
+    // vector<string> testvec;
 
-    Node test1 = Node("animal",1);
-    Node test2 = Node("art",1);
-    Node test3 = Node("ANIMAL",1);
+    // string tempString = "";
 
-    bool test =  test1 == test2;
+    // for(int i = 0; i< fileList.size(); i++){
+    //     for(int j=0; j< fileList[i].length(); j++){
+    //         tempString += fileList[i].at(j);
+    //     }
+    //     testvec.push_back(tempString);
+    //     tempString = "";
+    // }
 
+    // //testvec.push_back(tempString);
 
-    cout << "Test: " << test << endl;
-    myTable.sortWords();
-    cout << "Range Sort:" << endl << endl;
-    myTable.rangeSearch("a", "z");
-    // End of testing
+    // cout << fileList[2] << endl;
+    // string myString = testvec[0];
+
+    // ifstream inFile;
+    // inFile.open(myString.c_str());
+    // string car;
+    // while(inFile >> car){
+    //     cout << car << endl;
+    //     mainBST->insert(car);
+    // }
+    // inFile.close();
+
     cout << endl << endl;
     cout << "Begin Final Turnin Select Menu" << endl;
-
-    
 
     while(1){
         int userMenuSelect;
