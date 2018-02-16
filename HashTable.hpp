@@ -47,6 +47,7 @@ private:
 
 void mergeSort(Node array[], int leftIndex, int rightIndex);
 void merge(Node array[], int leftIndex, int middle, int rightIndex);
+int binarySearch(Node array[], int leftIndex, int rightIndex, string word);
 
 #endif /* HashTable_hpp */
 

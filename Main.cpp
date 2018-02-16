@@ -86,7 +86,9 @@ int main(){
 
 
     cout << "Test: " << test << endl;
-    //myTable.sortWords();
+    myTable.sortWords();
+    cout << "Range Sort:" << endl << endl;
+    myTable.rangeSearch("a", "z");
     // End of testing
     cout << endl << endl;
     cout << "Begin Final Turnin Select Menu" << endl;
