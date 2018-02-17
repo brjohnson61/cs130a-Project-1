@@ -10,6 +10,7 @@
 #include <vector>
 #include <cstring>
 #include <chrono>
+#include <algorithm>
 
 
 namespace fs = std::experimental::filesystem;
@@ -57,8 +58,21 @@ int main(){
         ifstream inFile(fileList[i].c_str());
         string temp = "";
         while(inFile >> temp){
-            mainBST->insert(temp);
-            wordCount++;
+            transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+            find_and_replace(temp, ",", "");
+            find_and_replace(temp, ".", "");
+            find_and_replace(temp, "!", "");
+            find_and_replace(temp, "?", "");
+            find_and_replace(temp, "(", "");
+            find_and_replace(temp, ")", "");
+            find_and_replace(temp, "*", "");
+            find_and_replace(temp, "&", "");
+            find_and_replace(temp, ":", "");
+            find_and_replace(temp, ";", "");
+            if(temp != ""){
+                mainBST->insert(temp);
+                wordCount++;
+            }
         }
         inFile.close();
     }
@@ -71,11 +85,22 @@ int main(){
         ifstream inFile(fileList[i].c_str());
         string temp = "";
         while(inFile >> temp){
-            table->insertWord(temp);
+            find_and_replace(temp, ",", "");
+            find_and_replace(temp, ".", "");
+            find_and_replace(temp, "!", "");
+            find_and_replace(temp, "?", "");
+            find_and_replace(temp, "(", "");
+            find_and_replace(temp, ")", "");
+            find_and_replace(temp, "*", "");
+            find_and_replace(temp, "&", "");
+            find_and_replace(temp, ":", "");
+            find_and_replace(temp, ";", "");
+            if (temp != ""){
+                table->insertWord(temp);
+            }
         }
         inFile.close();
     }
-
 
     cout << endl << endl;
     cout << "Begin Final Turnin Select Menu" << endl;
@@ -96,21 +121,26 @@ int main(){
         switch(userMenuSelect){
             case 1: 
             {
+
+                bool hbool, bbool;
                 cout << "Enter word to search for: " << endl;
                 cin >> firstArgString;
                 
                 auto start0 = chrono::high_resolution_clock::now();
-                (mainBST->search(firstArgString)) ? cout << "true" : cout << "false";
+                bbool = (mainBST->search(firstArgString)) ? true : false;
                 auto finish0 = chrono::high_resolution_clock::now();
-                cout << endl;
                 chrono::duration<double> elapsed0 = finish0 - start0;
-                cout << "BST: " << elapsed0.count() << " s\n";
+                
  
                 auto start1 = chrono::high_resolution_clock::now();  
-                (table->searchWord(firstArgString) != -1)? cout << "true": cout << "false";
+                hbool = (table->searchWord(firstArgString) != -1)? true : false;
                 auto finish1 = chrono::high_resolution_clock::now();
-                cout << endl;
                 chrono::duration<double> elapsed1 = finish1 - start1;
+                (bbool || hbool) ? cout<< "true" : cout << "false";
+
+
+                cout << endl;
+                cout << "BST: " << elapsed0.count() << " s\n";
                 cout << "HashTable: " << elapsed1.count() << " s\n";  
 
 
@@ -118,36 +148,64 @@ int main(){
             }
             case 2:
             {
-                (mainBST->getRoot() == NULL) ? cout << "NULL" : cout << "not NULL";
-                cout << endl;
                 cout << "Enter word to insert: " << endl;
                 cin >> firstArgString;
-                (mainBST->getRoot() == NULL) ? cout << "NULL" : cout << "not NULL";
-                cout << endl;
 
+                auto start0 = chrono::high_resolution_clock::now();
                 mainBST->insert(firstArgString);
+                auto finish0 = chrono::high_resolution_clock::now();
+                chrono::duration<double> elapsed0 = finish0 - start0;
+
+                auto start1 = chrono::high_resolution_clock::now();
                 table->insertWord(firstArgString);
-                cout << "*inserted*" << endl;
-                mainBST->printTree();
+                auto finish1 = chrono::high_resolution_clock::now();
+                chrono::duration<double> elapsed1 = finish1 - start1;
+
+                cout << "BST: " << elapsed0.count() << endl;
+                cout << "Hash: " << elapsed1.count() << endl;
+
                 break;
             }
             case 3:
             {
                 cout << "Enter word to delete: " << endl;
                 cin >> firstArgString;
+                
+                auto start0 = chrono::high_resolution_clock::now();
                 mainBST->remove(firstArgString);
+                auto finish0 = chrono::high_resolution_clock::now();
+                chrono::duration<double> elapsed0 = finish0 - start0;
+
+                auto start1 = chrono::high_resolution_clock::now();
                 table->deleteWord(firstArgString);
-                cout << "*removed*" << endl;
-                mainBST->printTree();
+                auto finish1 = chrono::high_resolution_clock::now();
+                chrono::duration<double> elapsed1 = finish1 - start1;
+
+                cout << "BST: " << elapsed0.count() << endl;
+                cout << "Hash: " << elapsed1.count() << endl;
+
                 break;
             }
             case 4:
              {
-                cout << "Starting sort operation...";
-                mainBST->printTree();
+                outputToFile("reported", "output.txt");
+                system("rm output.txt");
+
+                auto start0 = chrono::high_resolution_clock::now();
                 mainBST->sort();
+                auto finish0 = chrono::high_resolution_clock::now();
+                chrono::duration<double> elapsed0 = finish0 - start0;
+
+                outputToFile("\n", "output.txt");
+
+                auto start1 = chrono::high_resolution_clock::now();
                 table->sortWords();
-                cout << "sorted." << endl;
+                auto finish1 = chrono::high_resolution_clock::now();
+                chrono::duration<double> elapsed1 = finish1 - start1;
+
+                cout << "BST: " << elapsed0.count() << endl;
+                cout << "Hash: " << elapsed1.count() << endl;
+
                 break;
              }
             case 5:
@@ -157,15 +215,30 @@ int main(){
                 cin >> firstArgString;
                 cout << "Second word (upper bound): " << endl;
                 cin >> secondArgString;
+                
+                auto start0 = chrono::high_resolution_clock::now();
                 mainBST->rangeSearch(firstArgString, secondArgString);
+                auto finish0 = chrono::high_resolution_clock::now();
+                chrono::duration<double> elapsed0 = finish0 - start0;
+
+                cout << endl << endl;
+
+                auto start1 = chrono::high_resolution_clock::now();
                 table->rangeSearch(firstArgString, secondArgString);
-                mainBST->printTree();
+                auto finish1 = chrono::high_resolution_clock::now();
+                chrono::duration<double> elapsed1 = finish1 - start1;
+
+                cout << "BST: " << elapsed0.count() << endl;
+                cout << "Hash: " << elapsed1.count() << endl;
+
+                
                 break;
             }
             default:
             {
                 break;
             }
+        
         }
     }
     return 0;

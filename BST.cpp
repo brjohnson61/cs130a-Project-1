@@ -255,12 +255,11 @@ BST* BST::remove(string word){
 }
 
 void BST::sort(){
-    if(this->getLeft() != NULL){
-        this->getLeft()->sort();
-    }
-    outputToFile(this->getRoot()->getWord(), "binaryOutput.txt");
-    if(this->getRight() != NULL){
-        this->getRight()->sort();
+    if(this != NULL){
+        if(this->getRoot() != NULL)
+            this->getLeft()->sort();
+            outputToFile(this->getRoot()->getWord(), "output.txt");
+            this->getRight()->sort();
     }
 }
 

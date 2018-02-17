@@ -139,53 +139,62 @@ void HashTable::sortWords(){
     
 
     for(int i = 0; i < count; i ++){
-        outputToFile(tempHashArray[i].getWord(), "hashOutput.txt");
+        outputToFile(tempHashArray[i].getWord(), "output.txt");
     }
 
 }
 
 void HashTable::rangeSearch(string word1, string word2){
-    Node* tempHashArray = new Node [count];
-    int tempCount = 0;
-    for (int i = 0; i < size; i ++ ){
-        if (!isEmptyAt[i]){
-            tempHashArray[tempCount] = hashArray[i];
-            tempCount++;
+    transform(word1.begin(), word1.end(), word1.begin(), ::tolower);
+    transform(word2.begin(), word2.end(), word2.begin(), ::tolower);
+    for (int i = 0; i < size; i ++){
+        if(!isEmptyAt[i]){
+            if ((hashArray[i].getWord() >= word1) && (hashArray[i].getWord() <= word2)){
+                cout << hashArray[i].getWord() << endl;
+            }
         }
     }
-    mergeSort(tempHashArray, 0, count-1);
 
-    int index1 = binarySearch(tempHashArray,0, count-1,word1);
-    Node node1 = Node(word1,1);
-    Node node2 = Node (word2,1);
-    int index2 = binarySearch(tempHashArray,0, count-1,word2);
-    cout << "Index 1: " << index1 << endl;
-    cout << "Index 2: " << index2 << endl;
+    // Node* tempHashArray = new Node [count];
+    // int tempCount = 0;
+    // for (int i = 0; i < size; i ++ ){
+    //     if (!isEmptyAt[i]){
+    //         tempHashArray[tempCount] = hashArray[i];
+    //         tempCount++;
+    //     }
+    // }
+    // mergeSort(tempHashArray, 0, count-1);
 
-    if (index1 < index2){
-        while ((tempHashArray[index1] < node1 )&& (index1 < count)){
-            index1 = index1 + 1;
-        }
-        while ((tempHashArray[index2] > node2) && (index2 < count)){
-            index2 = index2 - 1;
-        }
-        for (int i = index1; i < index2+1; i++){
-            tempHashArray[i].printNode();
-        }
-    }else if (index1 > index2){
-        while ((tempHashArray[index2] < node2 )&& (index2 < count)){
-            index2 = index2 + 1;
-        }
-        while ((tempHashArray[index1] > node1) && (index1 < count)){
-            index1 = index1 - 1;
-        }
-        for (int i = index2; i < index1+1; i++){
-            tempHashArray[i].printNode();
-        }
-    }else {
-        tempHashArray[index1].printNode();
-    }
+    // int index1 = binarySearch(tempHashArray,0, count-1,word1);
+    // Node node1 = Node(word1,1);
+    // Node node2 = Node (word2,1);
+    // int index2 = binarySearch(tempHashArray,0, count-1,word2);
+    // // cout << "Index 1: " << index1 << endl;
+    // // cout << "Index 2: " << index2 << endl;
 
+    // if (index1 < index2){
+    //     while ((tempHashArray[index1] < node1 )&& (index1 < count)){
+    //         index1 = index1 + 1;
+    //     }
+    //     while ((tempHashArray[index2] > node2) && (index2 < count)){
+    //         index2 = index2 - 1;
+    //     }
+    //     for (int i = index1; i < index2+1; i++){
+    //         tempHashArray[i].printNode();
+    //     }
+    // } else {
+    //     tempHashArray[index1].printNode();
+    // }
+
+    // if (index1 == index2){
+    //     tempHashArray[index1].printNode(); 
+    // }else{
+        
+    //     for (int i = index1; i<index2; i++){
+    //         tempHashArray[i].printNode();
+    //     }
+    //     cout << "Index1: "<< index1<< " Index2: "<< index2 << endl;
+    // }
     
 }
 
@@ -271,7 +280,7 @@ int binarySearch(Node array[], int leftIndex, int rightIndex, string word){
         if (array[leftIndex] == tempNode)
             return leftIndex;
         else {
-            cout << "No word found" << endl;
+            //cout << "No word found" << endl;
             return leftIndex;
         }
     }if(leftIndex > rightIndex){
