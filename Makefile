@@ -1,2 +1,2 @@
-MainMake: Main.cpp Node.cpp HashTable.cpp BST.cpp
-	g++ -std=c++11 -o MainMake Node.cpp Main.cpp HashTable.cpp BST.cpp -lstdc++fs
+MainProgram: Main.cpp Node.cpp HashTable.cpp BinarySearchTree.cpp
+	g++ -std=c++11 -o MainProgram Node.cpp Main.cpp HashTable.cpp BinarySearchTree.cpp -lstdc++fs

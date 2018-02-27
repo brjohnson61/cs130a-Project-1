@@ -8,7 +8,7 @@
 
 #include "HashTable.hpp"
 #include "Node.hpp"
-#include "BST.hpp"
+#include "BinarySearchTree.hpp"
 #include <string.h>
 #include <math.h>
 #include <iostream>
@@ -18,13 +18,12 @@
 
 using namespace std;
 
-HashTable::HashTable(int dataSize){
-    size = 3*dataSize / 2;
-    count = 0;
+HashTable::HashTable(int capacity){
+    size = (3*capacity)/2;
     largestInsertTraversal = 0;
-    hashArray = new Node[size];
+    hashArr = new Node[size];
     onceOccupiedAt = new bool[size];
-
+    count = 0;
     isEmptyAt = new bool[size];
     for (int i = 0; i<size; i++){
         onceOccupiedAt[i] = false;
@@ -33,22 +32,21 @@ HashTable::HashTable(int dataSize){
 }
 
 HashTable::~HashTable(){
-    delete [] hashArray;
+    delete [] hashArr;
     delete [] onceOccupiedAt;
     delete [] isEmptyAt;
 }
 
-int HashTable::searchWord(string word){
+int HashTable::searchTable(string word){
     int index = hashFunction(word);
     int traversal = 0;
     
-
     while (onceOccupiedAt[index]){
         if (traversal > largestInsertTraversal){
             return -1;
         }
         if (!isEmptyAt[index]){
-            if (hashArray[index].getWord() == word){
+            if (hashArr[index].getWord() == word){
                 return index;
             }
         }
@@ -58,28 +56,29 @@ int HashTable::searchWord(string word){
     return -1;
 }
 
-bool HashTable::insertWord(string word){
+bool HashTable::insertNode(string word){
     
     int traversal = 0;
     Node node = Node(word);
 
-    if( count > (size*2/3))
+    if( count > (size*2/3)){
         return false;
+    }
+
     int index = hashFunction(word);
 
     if (isEmptyAt[index]){
-        hashArray[index] = node;
+        hashArr[index] = node;
         onceOccupiedAt[index] = true;
         isEmptyAt[index] = false;
         count ++;
         return true;
     }
     else{
-
         while(!isEmptyAt[index]){
             int tempIndex = 0;
-            if (hashArray[index].getWord() == node.getWord()){
-                hashArray[index].incrementCount();
+            if (hashArr[index].getWord() == node.getWord()){
+                hashArr[index].increaseCount();
                 return true;
             }
 
@@ -87,21 +86,20 @@ bool HashTable::insertWord(string word){
             index = (index + 1 ) % size;
         }
        
-        hashArray[index] = node;
+        hashArr[index] = node;
         onceOccupiedAt[index] = true;
         isEmptyAt[index] = false;
         count++;
 
-         if (traversal > largestInsertTraversal){
+        if(traversal > largestInsertTraversal){
             largestInsertTraversal = traversal;
         }
-
         return true;
     }
 }
 
-bool HashTable::deleteWord(string word){
-    int index = searchWord(word);
+bool HashTable::deleteNode(string word){
+    int index = searchTable(word);
     if (index < 0){
         return false;
     }
@@ -110,105 +108,58 @@ bool HashTable::deleteWord(string word){
     return true;
 }
 
-int HashTable::hashFunction(string word){
-    int stringLength = word.length(); 
-    int index;
-    unsigned int sum = 0;
-    char wordArr[stringLength + 1];
-    transform(word.begin(), word.end(), word.begin(), ::tolower);
-    strcpy(wordArr, word.c_str());
-    for (int i = 0; i< stringLength; i++){
-        sum = sum + i*pow((int)(wordArr[i]), i);
-        
-    }
-    index = sum % (size-1);
-    return index;
-}
-
-
-void HashTable::sortWords(){
+void HashTable::sortTable(){
     Node* tempHashArray = new Node [count];
     int tempCount = 0;
     for (int i = 0; i < size; i ++ ){
         if (!isEmptyAt[i]){
-            tempHashArray[tempCount] = hashArray[i];
+            tempHashArray[tempCount] = hashArr[i];
             tempCount++;
         }
     }
+
     mergeSort(tempHashArray, 0, count-1);
     
-
     for(int i = 0; i < count; i ++){
         outputToFile(tempHashArray[i].getWord(), "output.txt");
     }
-
 }
 
-void HashTable::rangeSearch(string word1, string word2){
+void HashTable::rangeSearchTable(string word1, string word2){
     transform(word1.begin(), word1.end(), word1.begin(), ::tolower);
     transform(word2.begin(), word2.end(), word2.begin(), ::tolower);
+    
     for (int i = 0; i < size; i ++){
         if(!isEmptyAt[i]){
-            if ((hashArray[i].getWord() >= word1) && (hashArray[i].getWord() <= word2)){
-                cout << hashArray[i].getWord() << endl;
+            if ((hashArr[i].getWord() >= word1) && (hashArr[i].getWord() <= word2)){
+                cout << hashArr[i].getWord() << endl;
             }
         }
-    }
-
-    // Node* tempHashArray = new Node [count];
-    // int tempCount = 0;
-    // for (int i = 0; i < size; i ++ ){
-    //     if (!isEmptyAt[i]){
-    //         tempHashArray[tempCount] = hashArray[i];
-    //         tempCount++;
-    //     }
-    // }
-    // mergeSort(tempHashArray, 0, count-1);
-
-    // int index1 = binarySearch(tempHashArray,0, count-1,word1);
-    // Node node1 = Node(word1,1);
-    // Node node2 = Node (word2,1);
-    // int index2 = binarySearch(tempHashArray,0, count-1,word2);
-    // // cout << "Index 1: " << index1 << endl;
-    // // cout << "Index 2: " << index2 << endl;
-
-    // if (index1 < index2){
-    //     while ((tempHashArray[index1] < node1 )&& (index1 < count)){
-    //         index1 = index1 + 1;
-    //     }
-    //     while ((tempHashArray[index2] > node2) && (index2 < count)){
-    //         index2 = index2 - 1;
-    //     }
-    //     for (int i = index1; i < index2+1; i++){
-    //         tempHashArray[i].printNode();
-    //     }
-    // } else {
-    //     tempHashArray[index1].printNode();
-    // }
-
-    // if (index1 == index2){
-    //     tempHashArray[index1].printNode(); 
-    // }else{
-        
-    //     for (int i = index1; i<index2; i++){
-    //         tempHashArray[i].printNode();
-    //     }
-    //     cout << "Index1: "<< index1<< " Index2: "<< index2 << endl;
-    // }
-    
+    }  
 }
-
-
 
 void HashTable::printHashTable(){
     int itemsFound = 0;
     for (int i = 0; i < size ; i ++ ){
         if (!isEmptyAt[i]){
-            cout << i << " : " << hashArray[i].getWord() << endl;
+            cout << i << " : " << hashArr[i].getWord() << endl;
         }
     }
 }
 
+int HashTable::hashFunction(string word){
+    int wordSize = word.length();
+    char wordArr[wordSize + 1]; 
+    strcpy(wordArr, word.c_str());
+    unsigned int total = 0;
+    int hashInd;
+    transform(word.begin(), word.end(), word.begin(), ::tolower);
+    for (int i = 0; i< wordSize; i++){
+        total += i*pow((int)(wordArr[i]), i);
+    }
+    hashInd = total % (size-1);
+    return hashInd;
+}
 
 void merge(Node array[], int leftIndex, int middle, int rightIndex){
     int i, j,k;
@@ -266,7 +217,7 @@ void mergeSort(Node array[], int leftIndex, int rightIndex){
 }
 
 int binarySearch(Node array[], int leftIndex, int rightIndex, string word){
-    Node tempNode = Node(word,1);
+    Node tempNode = Node(word);
     if (leftIndex < rightIndex){
         int middle = (leftIndex + rightIndex)/2;
         if (array[middle] < tempNode){
@@ -280,7 +231,6 @@ int binarySearch(Node array[], int leftIndex, int rightIndex, string word){
         if (array[leftIndex] == tempNode)
             return leftIndex;
         else {
-            //cout << "No word found" << endl;
             return leftIndex;
         }
     }if(leftIndex > rightIndex){

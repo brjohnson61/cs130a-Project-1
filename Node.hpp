@@ -19,31 +19,22 @@ using namespace std;
 
 
 class Node {
-
+public:
+    Node();
+    Node(string word);
+    Node(Node* copy);
+    bool operator==( Node& rhs);
+    bool operator<( Node& rhs);
+    bool operator>( Node& rhs); 
+    string getWord(void);
+    int getCount(void);
+    void setWord(string word);
+    void setCount(int count);
+    void decreaseCount(void);
+    void increaseCount(void);
 private:
     string word;
     int count;
-  
-
-public:
-    Node();
-    Node( string word);
-    Node(string word, int count);
-    Node(Node* other); 
-    
-    string getWord(void);
-    int getCount(void);
-    int getWordLength(void);
-    void printNode(void);
-    void setWord(string word);
-    void setCount(int count);
-    void incrementCount(void);
-    void decrementCount(void);
-    bool operator==( Node& rhs);
-    bool operator<( Node& rhs);
-    bool operator>( Node& rhs);
-
-    
 };
 
 void outputToFile(string word, string pathName);
